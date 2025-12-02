@@ -6,17 +6,32 @@
   <title>MAMACITA Skincare — Clean, Feminine, Effective</title>
   <meta name="description" content="MAMACITA Skincare: clean, vegan, and effective skincare for a natural, healthy glow." />
   <meta name="theme-color" content="#ff66a1" />
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Prevent FOUC tiny fix -->
-  <style>html{visibility:visible;opacity:1}</style>
+  <!-- New: Preload critical images -->
+  <link rel="preload" href="assets/mamacita.png" as="image">
+  <link rel="preload" href="assets/10658085.png" as="image">
+
+  <style>
+    html{visibility:visible;opacity:1}
+    
+    /* Background Image Option - UNCOMMENT TO USE */
+    /*
+    .hero-with-bg {
+      background: linear-gradient(rgba(255, 247, 251, 0.9), rgba(255, 247, 251, 0.9)), 
+                  url('assets/background-pattern.jpg') center/cover;
+    }
+    .section-with-bg {
+      background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), 
+                  url('assets/texture-bg.jpg') center/cover;
+    }
+    */
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header -->
+  <!-- Header with Cart Icon -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="logo" href="#" aria-label="MAMACITA Skincare Home">MAMACITA</a>
@@ -34,15 +49,35 @@
           <li><a href="#why">Why Us</a></li>
           <li><a href="#reviews">Reviews</a></li>
           <li><a href="#newsletter">Newsletter</a></li>
+          <li class="cart-icon-container">
+            <button class="cart-icon" id="cartIcon" aria-label="Shopping cart">
+              🛒 <span class="cart-count">0</span>
+            </button>
+          </li>
           <li><a href="#contact" class="btn btn--small">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
+  <!-- Shopping Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart" id="closeCart" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Cart items will be added here dynamically -->
+    </div>
+    <div class="cart-total">
+      Total: $<span id="cartTotal">0.00</span>
+    </div>
+    <button class="btn btn--full" id="checkoutBtn">Checkout</button>
+  </div>
+
   <main id="main">
-    <!-- Hero -->
-    <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero hero-with-bg"> <!-- Add hero-with-bg class for background -->
       <div class="container hero-inner">
         <div class="hero-text">
           <h1>Glow Naturally with <span class="brand">MAMACITA</span> Skincare</h1>
@@ -59,19 +94,18 @@
         </div>
 
         <div class="hero-media" aria-hidden="true">
-          <!-- two floating images for depth -->
           <div class="floating-card card-1">
-            <img src="mamacita.png" alt="MAMACITA skincare products" loading="lazy" decoding="async" />
+            <img src="assets/mamacita.png" alt="MAMACITA skincare products" loading="lazy" decoding="async" />
           </div>
           <div class="floating-card card-2">
-            <img src="10658085.png" alt="MAMACITA product detail" loading="lazy" decoding="async" />
+            <img src="assets/10658085.png" alt="MAMACITA product detail" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="section">
+    <!-- About Section -->
+    <section id="about" class="section section-with-bg"> <!-- Add section-with-bg class for background -->
       <div class="container grid-2">
         <div>
           <h2>Science meets Nature</h2>
@@ -83,16 +117,23 @@
             <li>Vegan & cruelty-free</li>
             <li>Fragrance-safe options</li>
             <li>Dermatologist reviewed</li>
+            <li>Non-comedogenic formulas</li>
+            <li>Eco-friendly packaging</li>
           </ul>
         </div>
         <div class="card highlight">
-          <h3>Key Promise</h3>
-          <p>Non-comedogenic. No parabens. No harsh alcohols. Just balanced, radiant skin.</p>
+          <h3>Our Promise</h3>
+          <p>Non-comedogenic. No parabens. No harsh alcohols. No synthetic fragrances. Just balanced, radiant skin.</p>
+          <div class="trust-badges">
+            <span class="badge">🌱 Vegan</span>
+            <span class="badge">🐰 Cruelty-Free</span>
+            <span class="badge">🌍 Eco-Conscious</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Products -->
+    <!-- Products Section -->
     <section id="products" class="section section-muted">
       <div class="container">
         <div class="section-head">
@@ -103,119 +144,183 @@
         <div class="products">
           <article class="product-card">
             <div class="product-media">
-              <img src="10658085.png" alt="Hydra Glow Serum" />
+              <img src="assets/10658085.png" alt="Hydra Glow Serum" />
+              <span class="product-badge">Bestseller</span>
             </div>
             <div class="product-body">
               <h3>Hydra Glow Serum</h3>
               <p>Deep hydration with a hyaluronic complex for plump, dewy skin.</p>
+              <div class="product-price">$34.99</div>
               <div class="product-actions">
-                <button class="btn btn--small add-cart" data-name="Hydra Glow Serum">Add to Cart</button>
-                <button class="icon-btn" aria-label="Favorite">♡</button>
+                <button class="btn btn--small add-cart" data-name="Hydra Glow Serum" data-price="34.99">Add to Cart</button>
+                <button class="icon-btn favorite-btn" aria-label="Favorite" data-product="Hydra Glow Serum">♡</button>
               </div>
             </div>
           </article>
 
           <article class="product-card">
             <div class="product-media">
-              <img src="product-2.jpg" alt="Rose Mist Toner" onerror="this.src='mamacita.png'"/>
+              <img src="assets/product-2.jpg" alt="Rose Mist Toner" onerror="this.src='assets/mamacita.png'"/>
+              <span class="product-badge new">New</span>
             </div>
             <div class="product-body">
               <h3>Rose Mist Toner</h3>
               <p>Soothing rose water to balance pH and refresh on-the-go.</p>
+              <div class="product-price">$24.99</div>
               <div class="product-actions">
-                <button class="btn btn--small add-cart" data-name="Rose Mist Toner">Add to Cart</button>
-                <button class="icon-btn" aria-label="Favorite">♡</button>
+                <button class="btn btn--small add-cart" data-name="Rose Mist Toner" data-price="24.99">Add to Cart</button>
+                <button class="icon-btn favorite-btn" aria-label="Favorite" data-product="Rose Mist Toner">♡</button>
               </div>
             </div>
           </article>
 
           <article class="product-card">
             <div class="product-media">
-              <img src="mamacita.png" alt="Cloud Cream Moisturizer" />
+              <img src="assets/mamacita.png" alt="Cloud Cream Moisturizer" />
             </div>
             <div class="product-body">
               <h3>Cloud Cream Moisturizer</h3>
               <p>Featherlight moisture that locks in hydration without residue.</p>
+              <div class="product-price">$29.99</div>
               <div class="product-actions">
-                <button class="btn btn--small add-cart" data-name="Cloud Cream Moisturizer">Add to Cart</button>
-                <button class="icon-btn" aria-label="Favorite">♡</button>
+                <button class="btn btn--small add-cart" data-name="Cloud Cream Moisturizer" data-price="29.99">Add to Cart</button>
+                <button class="icon-btn favorite-btn" aria-label="Favorite" data-product="Cloud Cream Moisturizer">♡</button>
               </div>
             </div>
           </article>
         </div>
+
+        <!-- New: Product Categories -->
+        <div class="categories">
+          <button class="category-btn active" data-category="all">All Products</button>
+          <button class="category-btn" data-category="serum">Serums</button>
+          <button class="category-btn" data-category="toner">Toners</button>
+          <button class="category-btn" data-category="moisturizer">Moisturizers</button>
+        </div>
       </div>
     </section>
 
-    <!-- Why Us -->
+    <!-- Why Us Section -->
     <section id="why" class="section">
-      <div class="container features">
-        <div class="feature">
-          <div class="icon" aria-hidden="true">🌱</div>
-          <h3>Clean Ingredients</h3>
-          <p>Plant-powered formulas free from harsh additives.</p>
+      <div class="container">
+        <div class="section-head">
+          <h2>Why Choose MAMACITA</h2>
+          <p class="muted">We're committed to your skin health and our planet's wellbeing</p>
         </div>
-        <div class="feature">
-          <div class="icon" aria-hidden="true">🧴</div>
-          <h3>Dermatologist Reviewed</h3>
-          <p>Balanced for sensitive and combination skin.</p>
-        </div>
-        <div class="feature">
-          <div class="icon" aria-hidden="true">🌍</div>
-          <h3>Eco-conscious</h3>
-          <p>Thoughtful packaging and responsible sourcing.</p>
+        <div class="features">
+          <div class="feature">
+            <div class="icon" aria-hidden="true">🌱</div>
+            <h3>Clean Ingredients</h3>
+            <p>Plant-powered formulas free from harsh additives, parabens, and synthetic fragrances.</p>
+          </div>
+          <div class="feature">
+            <div class="icon" aria-hidden="true">🧴</div>
+            <h3>Dermatologist Reviewed</h3>
+            <p>All products are carefully reviewed and balanced for sensitive and combination skin.</p>
+          </div>
+          <div class="feature">
+            <div class="icon" aria-hidden="true">🌍</div>
+            <h3>Eco-conscious</h3>
+            <p>Thoughtful packaging, responsible sourcing, and commitment to sustainability.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Reviews -->
+    <!-- Reviews Section -->
     <section id="reviews" class="section section-muted">
       <div class="container">
-        <h2>Loved by Skincare Lovers</h2>
+        <div class="section-head">
+          <h2>Loved by Skincare Lovers</h2>
+          <p class="muted">See what our community is saying</p>
+        </div>
         <div class="reviews">
-          <blockquote class="review">“My skin finally feels calm and hydrated. The serum is a staple now.” — Leila</blockquote>
-          <blockquote class="review">“Light textures, real results. The rose mist is always in my bag.” — Amira</blockquote>
-          <blockquote class="review">“Simple routine, big glow. Exactly what I needed.” — Sara</blockquote>
+          <blockquote class="review">
+            <div class="stars">★★★★★</div>
+            "My skin finally feels calm and hydrated. The serum is a staple now."
+            <cite>— Leila</cite>
+          </blockquote>
+          <blockquote class="review">
+            <div class="stars">★★★★★</div>
+            "Light textures, real results. The rose mist is always in my bag."
+            <cite>— Amira</cite>
+          </blockquote>
+          <blockquote class="review">
+            <div class="stars">★★★★☆</div>
+            "Simple routine, big glow. Exactly what I needed for my sensitive skin."
+            <cite>— Sara</cite>
+          </blockquote>
         </div>
       </div>
     </section>
 
-    <!-- Newsletter -->
+    <!-- Newsletter Section -->
     <section id="newsletter" class="section">
       <div class="container grid-2">
         <div>
           <h2>Join the MAMACITA Family</h2>
-          <p>Get tips, routines, and product drops delivered to your inbox.</p>
+          <p>Get exclusive skincare tips, personalized routines, and early access to new product drops delivered to your inbox.</p>
+          <ul class="newsletter-benefits">
+            <li>15% off your first order</li>
+            <li>Exclusive skincare guides</li>
+            <li>Early access to sales</li>
+          </ul>
         </div>
         <form class="newsletter-form" id="newsletterForm" aria-label="Subscribe to newsletter">
-          <label class="visually-hidden" for="news-email">Email</label>
-          <input id="news-email" name="email" type="email" placeholder="Enter your email" required />
-          <button class="btn" type="submit">Subscribe</button>
+          <div class="form-group">
+            <label class="visually-hidden" for="news-email">Email</label>
+            <input id="news-email" name="email" type="email" placeholder="Enter your email" required />
+          </div>
+          <div class="form-group">
+            <label class="visually-hidden" for="news-name">Name (optional)</label>
+            <input id="news-name" name="name" type="text" placeholder="Your name (optional)" />
+          </div>
+          <button class="btn" type="submit">Subscribe & Get 15% Off</button>
+          <p class="privacy-note">We respect your privacy. Unsubscribe at any time.</p>
         </form>
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact Section -->
     <section id="contact" class="section section-contact">
       <div class="container grid-2">
         <div class="contact-intro">
-          <h2>Contact Us</h2>
+          <h2>Get in Touch</h2>
           <p>Questions, collaborations or wholesale inquiries? Send us a message — we're happy to help.</p>
-          <p class="muted">Email: <a href="mailto:contact@mamacita.example">contact@mamacita.example</a></p>
-          <p class="muted">Instagram: <a href="https://instagram.com/mamacita.skincare" target="_blank" rel="noopener">@mamacita.skincare</a></p>
+          <div class="contact-info">
+            <p class="muted">📧 Email: <a href="mailto:contact@mamacita.example">contact@mamacita.example</a></p>
+            <p class="muted">📱 Instagram: <a href="https://instagram.com/mamacita.skincare" target="_blank" rel="noopener">@mamacita.skincare</a></p>
+            <p class="muted">📍 Based in: Los Angeles, CA</p>
+            <p class="muted">🕒 Response time: Within 24 hours</p>
+          </div>
         </div>
 
         <form class="contact-form" id="contactForm" aria-label="Contact form">
-          <label class="visually-hidden" for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your name" required />
-
-          <label class="visually-hidden" for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
-
-          <label class="visually-hidden" for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
-
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="">Select a topic</option>
+              <option value="product-question">Product Question</option>
+              <option value="wholesale">Wholesale Inquiry</option>
+              <option value="collaboration">Collaboration</option>
+              <option value="support">Customer Support</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+          </div>
           <div class="form-row">
-            <button class="btn" type="submit">Send</button>
+            <button class="btn" type="submit">Send Message</button>
             <div id="contact-status" aria-live="polite"></div>
           </div>
         </form>
@@ -223,19 +328,58 @@
     </section>
   </main>
 
+  <!-- Enhanced Footer -->
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2025 MAMACITA Skincare. All Rights Reserved.</p>
-      <nav aria-label="Footer">
-        <a href="#about">About</a>
-        <a href="#products">Products</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>MAMACITA</h4>
+          <p>Clean, vegan skincare for radiant, healthy skin. Dermatologist reviewed and cruelty-free.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="Facebook">📘</a>
+            <a href="#" aria-label="TikTok">🎵</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Shop</h4>
+          <nav aria-label="Footer shop">
+            <a href="#products">All Products</a>
+            <a href="#products">Best Sellers</a>
+            <a href="#products">New Arrivals</a>
+            <a href="#products">Skincare Sets</a>
+          </nav>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <nav aria-label="Footer support">
+            <a href="#contact">Contact Us</a>
+            <a href="#">Shipping Info</a>
+            <a href="#">Returns</a>
+            <a href="#">FAQ</a>
+          </nav>
+        </div>
+        <div class="footer-section">
+          <h4>Company</h4>
+          <nav aria-label="Footer company">
+            <a href="#about">About Us</a>
+            <a href="#why">Our Values</a>
+            <a href="#">Sustainability</a>
+            <a href="#">Press</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MAMACITA Skincare. All Rights Reserved.</p>
+        <nav aria-label="Footer legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </nav>
+      </div>
     </div>
   </footer>
 
   <script src="script.js" defer></script>
 </body>
 </html>
-
-
